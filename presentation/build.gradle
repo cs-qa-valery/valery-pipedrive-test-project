@@ -19,6 +19,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -35,12 +38,21 @@ dependencies {
             "com.android.support:support-v4:$support_version",
             "com.android.support:design:$support_version",
 
+            "androidx.lifecycle:lifecycle-extensions:$lifecycle_version",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version",
+
             "android.arch.persistence.room:runtime:$room_version",
 
             "com.squareup.retrofit2:retrofit:$retrofit_version",
+            "com.squareup.retrofit2:converter-moshi:$retrofit_version",
+            "com.squareup.okhttp3:logging-interceptor:$retrofit_logging",
 
             "com.android.support.constraint:constraint-layout:$constraint_version",
-            "com.jakewharton.timber:timber:$timber_version"
+            "com.jakewharton.timber:timber:$timber_version",
+
+            "org.kodein.di:kodein-di-generic-jvm:$kodein_version",
+            "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
     )
     kapt(
             "android.arch.persistence.room:compiler:$room_version"

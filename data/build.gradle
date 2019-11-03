@@ -17,6 +17,12 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "API_KEY", API_KEY
+            resValue 'string', "API_KEY", API_KEY
+        }
+        debug {
+            buildConfigField 'String', "API_KEY", API_KEY
+            resValue 'string', "API_KEY", API_KEY
         }
     }
 }
@@ -34,6 +40,7 @@ dependencies {
             "android.arch.persistence.room:rxjava2:$room_version",
 
             "com.squareup.retrofit2:retrofit:$retrofit_version",
+            "com.squareup.retrofit2:converter-gson:$retrofit_version",
 
             "com.jakewharton.timber:timber:$timber_version"
     )

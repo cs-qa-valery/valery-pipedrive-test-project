@@ -7,4 +7,6 @@
 
     <string name="translate_screen_hint_edit">Type here</string>
     <string name="translate_screen_arrows_content_description">Arrows</string>
+
+    <string name="translate_screen_error_translate">The error appears for translation</string>
 </resources>

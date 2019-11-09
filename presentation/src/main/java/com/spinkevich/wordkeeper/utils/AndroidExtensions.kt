@@ -3,6 +3,7 @@ package com.spinkevich.wordkeeper.utils
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.animation.Animation
 import android.widget.EditText
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
@@ -11,6 +12,13 @@ import androidx.fragment.app.FragmentActivity
 fun FragmentActivity.addFragmentToStack(fragment: Fragment, @IdRes container: Int) {
     supportFragmentManager.beginTransaction()
         .add(container, fragment)
+        .addToBackStack(null)
+        .commit()
+}
+
+fun FragmentActivity.replaceFragmentToStack(fragment: Fragment, @IdRes container: Int) {
+    supportFragmentManager.beginTransaction()
+        .replace(container, fragment)
         .addToBackStack(null)
         .commit()
 }
@@ -33,5 +41,18 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         override fun afterTextChanged(editable: Editable?) {
             afterTextChanged.invoke(editable.toString())
         }
+    })
+}
+
+fun Animation.onAnimationEnd(animationEnd: (Animation?) -> Unit) {
+
+    this.setAnimationListener(object : Animation.AnimationListener {
+        override fun onAnimationRepeat(animation: Animation?) {}
+
+        override fun onAnimationEnd(animation: Animation?) {
+            animationEnd.invoke(animation)
+        }
+
+        override fun onAnimationStart(animation: Animation?) {}
     })
 }

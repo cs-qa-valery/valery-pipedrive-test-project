@@ -2,6 +2,7 @@ package com.spinkevich.wordkeeper.feature.translate
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
@@ -12,6 +13,7 @@ import com.spinkevich.wordkeeper.R
 import com.spinkevich.wordkeeper.core.BaseFragment
 import com.spinkevich.wordkeeper.core.TranslateViewModelFactory
 import com.spinkevich.wordkeeper.utils.afterTextChanged
+import com.spinkevich.wordkeeper.utils.onAnimationEnd
 import kotlinx.android.synthetic.main.fragment_translate.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -92,6 +94,18 @@ class TranslateFragment : BaseFragment(), KodeinAware, OnLanguageSelectedListene
     private fun createChip(translation: Translation) {
         val chip = TranslationChip(context)
         chip.init(translation.value)
+        chip.setOnClickListener {
+            val originalWord = text_for_translation.text.toString()
+            viewModel.observeClickTranslation(originalWord, translation.value)
+
+            animateFadeOut(it)
+        }
         translation_group.addView(chip)
+    }
+
+    private fun animateFadeOut(view: View) {
+        val startAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out_animation)
+        view.startAnimation(startAnimation)
+        startAnimation.onAnimationEnd { view.visibility = View.INVISIBLE }
     }
 }

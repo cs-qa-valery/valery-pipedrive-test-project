@@ -3,11 +3,14 @@ package com.spinkevich.wordkeeper.feature.translate
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.spinkevich.domain.model.TranslationModel
+import com.spinkevich.domain.model.WordModel
+import com.spinkevich.domain.usecase.StudyWordsUseCase
 import com.spinkevich.domain.usecase.TranslateUseCase
 import kotlinx.coroutines.*
 
 class TranslateViewModel(
-    private val translateUseCase: TranslateUseCase
+    private val translateUseCase: TranslateUseCase,
+    private val studyWordsUseCase: StudyWordsUseCase
 ) : ViewModel() {
 
     val translationsList: MutableLiveData<TranslationModel> = MutableLiveData()
@@ -32,6 +35,14 @@ class TranslateViewModel(
             } catch (ex: Exception) {
                 errors.value = ex
             }
+        }
+    }
+
+    fun observeClickTranslation(original: String, translation: String) {
+        val direction = "${fromLanguage.value}-${toLanguage.value}"
+        uiScope.launch {
+            val model = WordModel(original, translation, direction)
+            studyWordsUseCase.addWord(model)
         }
     }
 

@@ -12,7 +12,7 @@ import com.spinkevich.wordkeeper.BaseApp
 import com.spinkevich.wordkeeper.R
 import com.spinkevich.wordkeeper.core.BaseFragment
 import com.spinkevich.wordkeeper.core.TranslateViewModelFactory
-import com.spinkevich.wordkeeper.utils.afterTextChanged
+import com.spinkevich.wordkeeper.utils.EditTextDebounceListener
 import com.spinkevich.wordkeeper.utils.onAnimationEnd
 import kotlinx.android.synthetic.main.fragment_translate.*
 import org.kodein.di.Kodein
@@ -52,8 +52,11 @@ class TranslateFragment : BaseFragment(), KodeinAware, OnLanguageSelectedListene
             to_language.text = it.toUpperCase()
         })
         viewModel.errors.observe(this, Observer {
-            Snackbar.make(view, resources.getString(R.string.translate_screen_error_translate), Snackbar.LENGTH_SHORT)
-                .show()
+            Snackbar.make(
+                view,
+                resources.getString(R.string.translate_screen_error_translate),
+                Snackbar.LENGTH_SHORT
+            ).show()
         })
     }
 
@@ -86,9 +89,11 @@ class TranslateFragment : BaseFragment(), KodeinAware, OnLanguageSelectedListene
             chooseLanguageDialog.setTargetFragment(this, TO_LANGUAGE_CODE)
             chooseLanguageDialog.show(fragmentManager, ChooseLanguageDialog.TAG)
         }
-        text_for_translation.afterTextChanged {
-            viewModel.observeTranslation(it)
-        }
+        text_for_translation.addTextChangedListener(
+            EditTextDebounceListener(
+                listener = { viewModel.observeTranslation(it) }
+            )
+        )
     }
 
     private fun createChip(translation: Translation) {

@@ -16,12 +16,15 @@ import com.spinkevich.domain.repository.StudyWordsRepository
 import com.spinkevich.domain.repository.TranslateRepository
 import com.spinkevich.domain.usecase.StudyWordsUseCase
 import com.spinkevich.domain.usecase.TranslateUseCase
-import com.spinkevich.wordkeeper.core.StudyViewModelFactory
-import com.spinkevich.wordkeeper.core.TranslateViewModelFactory
+import com.spinkevich.wordkeeper.core.ViewModelFactory
+import com.spinkevich.wordkeeper.feature.study.StudyViewModel
+import com.spinkevich.wordkeeper.feature.translate.TranslateViewModel
+import com.spinkevich.wordkeeper.utils.bindViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.direct
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
@@ -59,13 +62,13 @@ class BaseApp : Application(), KodeinAware {
     }
 
     private val presentationModule = Kodein.Module("presentation", false) {
-        bind<TranslateViewModelFactory>() with singleton {
-            TranslateViewModelFactory(
-                instance(),
-                instance()
-            )
+        bindViewModel<TranslateViewModel>() with singleton {
+            TranslateViewModel(instance(), instance())
         }
-        bind<StudyViewModelFactory>() with singleton { StudyViewModelFactory(instance()) }
+        bindViewModel<StudyViewModel>() with singleton {
+            StudyViewModel(instance())
+        }
+        bind() from singleton { ViewModelFactory(direct) }
     }
 
     override val kodein: Kodein = Kodein {

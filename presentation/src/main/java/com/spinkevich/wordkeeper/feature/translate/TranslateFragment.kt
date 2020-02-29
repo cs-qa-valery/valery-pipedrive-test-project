@@ -4,37 +4,29 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.spinkevich.data.utils.LanguageHelper
 import com.spinkevich.domain.model.Translation
-import com.spinkevich.wordkeeper.BaseApp
 import com.spinkevich.wordkeeper.R
 import com.spinkevich.wordkeeper.core.BaseFragment
-import com.spinkevich.wordkeeper.core.TranslateViewModelFactory
 import com.spinkevich.wordkeeper.utils.EditTextDebounceListener
 import com.spinkevich.wordkeeper.utils.onAnimationEnd
+import com.spinkevich.wordkeeper.utils.viewModel
 import kotlinx.android.synthetic.main.fragment_translate.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
+import org.kodein.di.android.x.closestKodein
 
 private const val FROM_LANGUAGE_CODE = 21
 private const val TO_LANGUAGE_CODE = 22
 
 class TranslateFragment : BaseFragment(), KodeinAware, OnLanguageSelectedListener {
 
-    override lateinit var kodein: Kodein
+    override val kodein: Kodein by closestKodein()
 
-    private val viewModelFactory: TranslateViewModelFactory by instance()
-    private lateinit var viewModel: TranslateViewModel
+    private val viewModel: TranslateViewModel by viewModel()
 
     override fun getLayoutRes() = R.layout.fragment_translate
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        kodein = (requireActivity().application as BaseApp).kodein
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,9 +69,6 @@ class TranslateFragment : BaseFragment(), KodeinAware, OnLanguageSelectedListene
     }
 
     private fun initializeViews() {
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory)
-            .get(TranslateViewModel::class.java)
-
         val chooseLanguageDialog = ChooseLanguageDialog()
         from_language.setOnClickListener {
             chooseLanguageDialog.setTargetFragment(this, FROM_LANGUAGE_CODE)

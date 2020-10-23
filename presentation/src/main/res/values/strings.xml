@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">WordKeeper</string>
+
+    <string name="bottom_navigation_camera">Open camera</string>
+    <string name="bottom_navigation_translate">Translate</string>
+    <string name="bottom_navigation_study_list">Study list</string>
+
+    <string name="translate_screen_hint_edit">Type here</string>
+    <string name="translate_screen_arrows_content_description">Arrows</string>
+
+    <string name="translate_screen_error_translate">The error appears for translation</string>
+</resources>

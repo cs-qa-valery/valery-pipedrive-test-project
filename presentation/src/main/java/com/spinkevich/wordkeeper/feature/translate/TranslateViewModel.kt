@@ -43,6 +43,7 @@ class TranslateViewModel(
         uiScope.launch {
             val model = WordModel(original, translation, direction)
             studyWordsUseCase.addWord(model)
+            translationsList.value = TranslationModel(emptyList())
         }
     }
 

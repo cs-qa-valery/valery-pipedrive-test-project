@@ -43,8 +43,11 @@ class TranslateViewModel(
         uiScope.launch {
             val model = WordModel(original, translation, direction)
             studyWordsUseCase.addWord(model)
-            translationsList.value = TranslationModel(emptyList())
         }
+    }
+
+    fun clearChips(){
+        translationsList.value = TranslationModel(emptyList())
     }
 
     override fun onCleared() {

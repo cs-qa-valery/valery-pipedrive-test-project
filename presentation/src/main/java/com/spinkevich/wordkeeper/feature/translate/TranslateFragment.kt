@@ -52,6 +52,11 @@ class TranslateFragment : BaseFragment(), KodeinAware, OnLanguageSelectedListene
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.clearChips()
+    }
+
     override fun selectLanguage(language: String, code: Int) {
         when (code) {
             FROM_LANGUAGE_CODE -> {

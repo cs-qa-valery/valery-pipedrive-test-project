@@ -24,6 +24,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.conf.ConfigurableKodein
 import org.kodein.di.direct
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -35,7 +36,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 private const val DATABASE_NAME = "wordkeeper.db"
 private const val BASE_URL = "https://dictionary.yandex.net/"
 
-class BaseApp : Application(), KodeinAware {
+open class BaseApp : Application(), KodeinAware {
+
+    override val kodein = ConfigurableKodein(mutable = true)
+
+    var overrideModule: Kodein.Module? = null
 
     private val dataModule = Kodein.Module("data", false) {
         bind<ResponseToDomainMapper>() with singleton { ResponseToDomainMapper() }
@@ -71,12 +76,6 @@ class BaseApp : Application(), KodeinAware {
         bind() from singleton { ViewModelFactory(direct) }
     }
 
-    override val kodein: Kodein = Kodein {
-        import(dataModule)
-        import(domainModule)
-        import(presentationModule)
-    }
-
     private val context: Context by kodein.newInstance { applicationContext }
 
     private val database: WordsDatabase by kodein.newInstance {
@@ -104,4 +103,23 @@ class BaseApp : Application(), KodeinAware {
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
+
+        override fun onCreate() {
+            super.onCreate()
+            resetInjection()
+        }
+
+        fun addModule() {
+            if (overrideModule != null) {
+                kodein.addImport(overrideModule!!, true)
+            }
+        }
+
+        fun resetInjection() {
+            kodein.clear()
+            kodein.addImport(dataModule,true)
+            kodein.addImport(domainModule,true)
+            kodein.addImport(presentationModule,true)
+        }
+
 }

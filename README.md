@@ -14,8 +14,15 @@ App for UI testing homework
 
 ## App description  
 
-> Can Translate between 4 languages ( English, Russian, German, Turkish)
->
-> Can´t Select same languages for translating (like English to English)
+> Can Translate between 5 languages
+           
+| Language | Code |
+| ------ | ------ |
+English | EN
+German | DE
+Russian | RU
+Estonian | EE
+Turkish | TR
+
 >
 > If clicked on Translated Chip, it will be moved to study tab

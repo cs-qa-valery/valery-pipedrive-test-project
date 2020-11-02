@@ -7,6 +7,7 @@ object LanguageHelper {
             put("English", "en")
             put("German", "de")
             put("Russian", "ru")
+            put("Estonian", "fin")
             put("Turkish", "tr")
         }
     }

@@ -2,6 +2,7 @@ package com.spinkevich.wordkeeper.feature
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.spinkevich.wordkeeper.BaseApp
 import com.spinkevich.wordkeeper.R
 import com.spinkevich.wordkeeper.feature.study.StudyFragment
 import com.spinkevich.wordkeeper.feature.translate.TranslateFragment
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein by closestKodein()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (applicationContext as BaseApp).addModule()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

@@ -52,7 +52,8 @@ dependencies {
             "com.jakewharton.timber:timber:$timber_version",
 
             "org.kodein.di:kodein-di-generic-jvm:$kodein_version",
-            "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
+            "org.kodein.di:kodein-di-framework-android-x:$kodein_version",
+            'org.kodein.di:kodein-di-conf-jvm:6.4.1'
     )
     kapt(
             "android.arch.persistence.room:compiler:$room_version"

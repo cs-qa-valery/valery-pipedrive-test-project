@@ -18,6 +18,8 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        // Context for modules
+        val app = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as BaseApp
         assertEquals("com.spinkevich.wordkeeper", appContext.packageName)
     }
 }

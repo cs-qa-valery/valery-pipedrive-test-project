@@ -4,13 +4,12 @@ App for UI testing homework
 
 * 1: Git clone or download the .zip and open with android stuido.
 
-* 2: Write some UI tests to confirm that app works like stated below.
+* 2: In Android Studio right-click the androidTest folder and click "Run tests in ..."
 
-    *You can use any library or method you think is best.*
+## Tests description
 
-* 3:Try to write at least one test that fails, so it "catches the bug"
-
-* Bonus: Since the app uses Dependency Injection, it is possible to mock responses and values, bonus points for a test that has a mocked response.
+Test are written with Kakao using page-object pattern.
+There are 3 tests that are supposed to fail (because of bugs in the app)
 
 ## App description  
 
